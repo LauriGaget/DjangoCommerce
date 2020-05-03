@@ -1,0 +1,101 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DjangoTek</title>
+    <link rel="icon" type="image/png" href="{% static "image/logo.png" %}" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/styleShop.css" %}">
+    <link href="https://fonts.googleapis.com/css?family=Oxanium&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Black+Ops+One&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d05d04e727.js" crossorigin="anonymous"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://kenwheeler.github.io/slick/slick/slick.js"></script>
+
+
+</head>
+<body>
+<header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark nav-bg">
+
+        <a class="navbar-brand" href="{% url 'product-list' %}" >
+
+            <ul class="list-titre">
+                <li class="item-titre">D</li>
+                <li class="item-titre">J</li>
+                <li class="item-titre">A</li>
+                <li class="item-titre">N</li>
+                <li class="item-titre">G</li>
+                <li class="item-titre">O</li>
+                <li class="item-titre">T</li>
+                <li class="item-titre">E</li>
+                <li class="item-titre">K</li>
+            </ul>
+
+
+
+
+
+        </a>
+
+<div class="dropdown float-right">
+  <button class="btn btn-outline-success dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="float: right !important;">
+
+    {% if user.is_authenticated %}
+        {{  user.username }}
+    {% else %}
+          Account
+    {% endif %}
+  </button>
+
+  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+    {% if user.is_authenticated%}
+        <a class="dropdown-item" href="{% url "user-page" user.id %}">My Account</a>
+        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+        <a class="dropdown-item" href="{% url 'get-cart' user.id %}">My Cart<span class="badge red z-depth-1 mr-1" style="background-color: red">{{ cart.count }}</span></a>
+     {% else%}
+        <a class="dropdown-item" href="{% url 'login' %}">login</a>
+        <a class="dropdown-item" href="{%  url 'django_registration_register' %}">Create</a>
+    {% endif %}
+  </div>
+</div>
+
+    </nav>
+    {% block head-image %}
+    {% endblock %}
+
+
+</header>
+<div class="container-fluid" style="width: 90%">
+<ul class="nav bg-dark">
+    {% for categories in categories %}
+  <li class="nav-item nav-category">
+    <a class="nav-link active" href="{% url 'product_list_by_category' categories.slug %}">{{ categories.name }}</a>
+  </li>
+    {% endfor %}
+</ul>
+{% block content %}
+{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"> </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script>
+<script src="{% static "js/script.js" %}"></script>
+</body>
+</html>

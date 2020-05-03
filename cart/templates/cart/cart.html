@@ -1,0 +1,38 @@
+{% extends "auth_layout.html" %}
+{% block auth %}
+
+
+    {% if cart.count > 0 %}
+     <table>
+
+        <tr>
+            <th>Image</th>
+            <th>Marque</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+            <th></th>
+        </tr>
+        {% for item in cart %}
+        <tr>
+            <td><img src="{{ item.product.image.url }}" style="width: 200px"> </td>
+            <td>{{ item.product.brand }}</td>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.total_price }}</td>
+            <td><a href="{%  url 'remove-from-cart' item.product.id user.id %}"><button class="btn btn-outline-danger">X</button></a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td> total {{ cart.summary }}</td>
+        </tr>
+    </table>
+    {% else %}
+
+    <div class="alert alert-primary" role="alert">
+            Nothing in your cart, <a href="{% url 'product-list' %}" class="alert-link"> go add some products ! </a>
+    </div>
+
+    {% endif %}
+
+{% endblock %}
